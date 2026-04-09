@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string>Available chats</string>
    </property>
   </widget>
   <widget class="QPushButton" name="BackButton">
@@ -38,6 +38,45 @@
    <property name="text">
     <string>Back</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>30</y>
+     <width>120</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>focus mode</string>
+   </property>
+   <widget class="QRadioButton" name="focusRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>99</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>focus</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="notFocusRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>99</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>not focused</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

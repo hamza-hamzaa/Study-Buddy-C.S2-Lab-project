@@ -2,7 +2,10 @@
 #include "courseselectionwindow.h"
 #include "chatSelectionWindow.h"
 #include "ui_courseselectionwindow.h"
+#include<vector>
 #include<QMessageBox>
+#include<QListWidgetItem>
+
 CourseSelectionWindow::CourseSelectionWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::CourseSelectionWindow)
@@ -33,7 +36,13 @@ void CourseSelectionWindow::on_BackButton_clicked()
 void CourseSelectionWindow::loadCourses()
 {
     ui->CourseListWidget->clear();
-
+    /*
+    ui->CourseListWidget->setStyleSheet(
+        "QListWidget { background-color: #452f8f; color: black; }"
+        "QListWidget::item { padding: 8px; }"
+        "QListWidget::item:selected { background-color: #f8f7fa; }"
+        );
+*/
     if (selectedMajor == "Computer Science") {
         ui->CourseListWidget->addItem("CS1");
         ui->CourseListWidget->addItem("CS2");
@@ -48,17 +57,33 @@ void CourseSelectionWindow::loadCourses()
         ui->CourseListWidget->addItem("Marketing");
         ui->CourseListWidget->addItem("Accounting");
     }
+
 }
 //add major button
-void CourseSelectionWindow::limitSelection(){
-    QList<QListWidgetItem*> selected = ui->CourseListWidget->selectedItems();
-    if (selected.size() > 6) {
-        // Get the last selected item
-        QListWidgetItem* item = ui->CourseListWidget->currentItem();
-        if (item) {
+void CourseSelectionWindow::limitSelection() {
+    QListWidgetItem* item = ui->CourseListWidget->currentItem();
+
+    QString course = item->text();
+
+    if (item->isSelected()) {
+        // ADD case
+        if (names.size() >= 6) {
             item->setSelected(false); // undo selection
+            QMessageBox::warning(this, "Limit", "You can select a maximum of 6 courses.");
+            return;
         }
-        QMessageBox::warning(this, "Limit","You can select a maximum of 6 courses.");
+
+        // avoid duplicates
+        if (std::find(names.begin(), names.end(), course) == names.end()) {
+            names.push_back(course);
+        }
+    }
+     else {
+        // REMOVE case
+        auto it = std::find(names.begin(), names.end(), course);
+        if (it != names.end()) {
+            names.erase(it);
+        }
     }
 }
 
@@ -68,16 +93,11 @@ void CourseSelectionWindow::limitSelection(){
 
 void CourseSelectionWindow::on_NextButton_clicked()
 {
-    QStringList selectedCourses;
 
-    QList<QListWidgetItem*> items = ui->CourseListWidget->selectedItems();
-
-    for (QListWidgetItem* item : items) {
-        selectedCourses.append(item->text());
-    }
 
     this->hide();
-    ChatSelectionWindow * CSW = new ChatSelectionWindow(selectedCourses,this);
+    ChatSelectionWindow * CSW = new ChatSelectionWindow(names,this);
     CSW->show();
 }
+
 

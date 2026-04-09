@@ -8,17 +8,20 @@ CONFIG += c++17
 
 SOURCES += \
     chatselectionwindow.cpp \
+    chatwindow.cpp \
     courseselectionwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     chatselectionwindow.h \
+    chatwindow.h \
     courseselectionwindow.h \
     mainwindow.h
 
 FORMS += \
     chatselectionwindow.ui \
+    chatwindow.ui \
     courseselectionwindow.ui \
     mainwindow.ui
 

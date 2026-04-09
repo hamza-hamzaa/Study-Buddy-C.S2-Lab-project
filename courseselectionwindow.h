@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include<QString>
+#include<QListWidgetItem>
 namespace Ui {
 class CourseSelectionWindow;
 }
@@ -22,11 +23,13 @@ private slots:
 
     void on_NextButton_clicked();
 
+
 private:
     Ui::CourseSelectionWindow *ui;
     QString selectedMajor;
     void loadCourses();
     void limitSelection();
+    std::vector<QString> names;
 };
 
 #endif // COURSESELECTIONWINDOW_H
