@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>616</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>20</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>19</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>LOGIN WINDOW </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nameLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>120</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>name:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="EmailLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Email:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="IDLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ID:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="nameEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>120</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="EmailEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>150</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="IDEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>180</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NextButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>500</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>NEXT</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="MajorComboBox">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>250</y>
+      <width>103</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>select</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Computer Science</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Computer Engineering</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MICT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Mechanical Engineering</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electronic Engineering</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu2222">
+    <property name="title">
+     <string>2222</string>
+    </property>
+   </widget>
+   <addaction name="menu2222"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
