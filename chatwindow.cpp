@@ -14,8 +14,8 @@ chatWindow::chatWindow(QString course ,QWidget *parent)
     , ui(new Ui::chatWindow)
 {
     ui->setupUi(this);
-    this->setStyleSheet("background-color: lightblue;");
-    this->setWindowTitle(course+" window");
+    this->setStyleSheet("background-color: #1e71a8;");
+    this->setWindowTitle(course+" chat");
 
 }
 chatWindow::~chatWindow()

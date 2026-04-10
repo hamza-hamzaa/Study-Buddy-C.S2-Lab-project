@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>632</width>
     <height>300</height>
    </rect>
   </property>
@@ -22,6 +22,11 @@
      <height>32</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #1E71A8;
+color: #fcfcfc;
+border-radius: 10px;</string>
+   </property>
    <property name="text">
     <string>Back</string>
    </property>
@@ -29,32 +34,27 @@
   <widget class="QPushButton" name="NextButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>520</x>
      <y>260</y>
      <width>100</width>
      <height>32</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #1E71A8;
+color: #fcfcfc;
+border-radius: 10px;</string>
+   </property>
    <property name="text">
     <string>Next</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="CourseComboBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>103</width>
-     <height>32</height>
-    </rect>
    </property>
   </widget>
   <widget class="QListWidget" name="CourseListWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>151</width>
+     <x>70</x>
+     <y>30</y>
+     <width>271</width>
      <height>141</height>
     </rect>
    </property>
@@ -66,6 +66,51 @@
      <string>New Item</string>
     </property>
    </item>
+  </widget>
+  <widget class="QLabel" name="coursesLabel">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>10</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: black;</string>
+   </property>
+   <property name="text">
+    <string>Major Courses:</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="CoreListWidget">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>30</y>
+     <width>256</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>10</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: black</string>
+   </property>
+   <property name="text">
+    <string>Core Courses:</string>
+   </property>
   </widget>
  </widget>
  <resources/>

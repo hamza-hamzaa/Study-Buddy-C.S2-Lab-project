@@ -6,24 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>335</width>
+    <width>361</width>
     <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #fcfcfc
+</string>
+  </property>
   <widget class="QGroupBox" name="buttonContainer">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>30</y>
-     <width>120</width>
+     <width>181</width>
      <height>291</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgba(255,255,255,0);
+color: #171616</string>
+   </property>
    <property name="title">
-    <string>Available chats</string>
+    <string>Available chats:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="BackButton">
@@ -35,6 +43,10 @@
      <height>32</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #1e71a8;
+border-radius: 10px;</string>
+   </property>
    <property name="text">
     <string>Back</string>
    </property>
@@ -42,26 +54,38 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>30</y>
-     <width>120</width>
+     <x>220</x>
+     <y>50</y>
+     <width>131</width>
      <height>91</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(219,219,219);
+color: black;
+background-color::title: transparent;
+</string>
+   </property>
    <property name="title">
-    <string>focus mode</string>
+    <string/>
    </property>
    <widget class="QRadioButton" name="focusRadioButton">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>99</width>
+      <width>111</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1e71a8;
+color:white;
+border-radius: 10px;
+</string>
+    </property>
     <property name="text">
-     <string>focus</string>
+     <string>Focus</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="notFocusRadioButton">
@@ -69,14 +93,36 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>99</width>
+      <width>111</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1e71a8;
+color:white;
+border-radius: 10px;</string>
+    </property>
     <property name="text">
-     <string>not focused</string>
+     <string>Not Focused </string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>30</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+color: black;</string>
+   </property>
+   <property name="text">
+    <string>Focus Mode:</string>
+   </property>
   </widget>
  </widget>
  <resources/>

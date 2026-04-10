@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include"CourseSelectionWindow.h"
 #include "ui_mainwindow.h"
+#include<QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -38,9 +39,72 @@ MainWindow::~MainWindow()
 void MainWindow::on_NextButton_clicked()
 {
     QString Major=ui->MajorComboBox->currentText();
-    this->hide();
-    CourseSelectionWindow * CSW = new CourseSelectionWindow(Major, this);
+    QMessageBox msg;
+    QMessageBox msg1;
+    QMessageBox msg2;
+    QMessageBox msg3;
+    msg3.setText("please enter a name");
+    msg1.setText("Invalid ID");
+    msg.setText("invalid Email");
+    msg2.setText("Please Choose an actual major");
+    msg.setStyleSheet(
+        "QMessageBox { background-color: white; }"
+        "QLabel { color: #1F2933; font-size: 12px; }"
+        "QPushButton { background-color: #1E71A8; border-radius: 17px;}");
+    msg1.setStyleSheet(
+        "QMessageBox { background-color: white; }"
+        "QLabel { color: #1F2933; font-size: 12px; }"
+        "QPushButton { background-color: #1E71A8;  }");
+    msg2.setStyleSheet(
+        "QMessageBox { background-color: white; }"
+        "QLabel { color: #1F2933; font-size: 12px; }"
+        "QPushButton { background-color: #1E71A8;  }");
+    msg3.setStyleSheet(
+        "QMessageBox { background-color: white; }"
+        "QLabel { color: #1F2933; font-size: 12px; }"
+        "QPushButton { background-color: #1E71A8;  }");
 
-    CSW -> show();
+
+    int ID =ui->IDEdit->text().toInt();
+    QString Email=ui->EmailEdit->text();
+    if(ui->nameEdit->text()!=""){
+        if(checkEmail(Email)){
+                if(checkID(ID)){
+                    if(Major!="Major"){
+                        this->hide();
+                        CourseSelectionWindow * CSW = new CourseSelectionWindow(ui->nameEdit->text(),Major, this);
+                        CSW -> show();
+                    }
+                else{
+                    msg2.exec();
+                }
+            }
+            else{
+                msg1.exec();
+            }
+
+        }
+        else{
+            msg.exec();
+        }
+    }
+    else{
+        msg3.exec();
+    }
+
+
+}
+
+
+
+bool MainWindow::checkID(int ID){
+    if(ID/10000<90026&&ID/10000>90019){
+        return true;
+    }
+    return false;
+}
+bool MainWindow::checkEmail(QString email)
+{
+    return email.endsWith("@aucegypt.edu");
 }
 

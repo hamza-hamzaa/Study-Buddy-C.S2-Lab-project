@@ -13,8 +13,8 @@ class ChatSelectionWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ChatSelectionWindow(QWidget *parent = nullptr);
-    explicit ChatSelectionWindow(std::vector<QString> courses, QWidget *parent = nullptr);
+
+    explicit ChatSelectionWindow(QString major,QString name,std::vector<QString> courses, QWidget *parent = nullptr);
     ~ChatSelectionWindow();
 
 private slots:
@@ -24,7 +24,8 @@ private slots:
 private:
     Ui::ChatSelectionWindow *ui;
     std::vector<QString>selectedCourses;
-
+    QString name;
+    QString major;
     void createCourseButtons();
 };
 
