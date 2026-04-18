@@ -17,12 +17,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+signals:
+    void loginRequested(const QString& name, const QString& email, int id, const QString& major);
+
 private slots:
     void on_NextButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    bool checkID(int ID);
-    bool checkEmail(QString email);
 };
 #endif // MAINWINDOW_H

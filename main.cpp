@@ -1,12 +1,14 @@
-#include "mainwindow.h"
+#include "clientcontroller.h"
+#include "qtnetworkclient.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    QtNetworkClient* network = new QtNetworkClient();
+    ClientController controller(network);
+    controller.start();
     return QCoreApplication::exec();
 }
 

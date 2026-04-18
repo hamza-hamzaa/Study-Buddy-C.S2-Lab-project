@@ -13,8 +13,13 @@ class chatWindow : public QDialog
 
 public:
     explicit chatWindow(QWidget *parent = nullptr);
-    explicit chatWindow(QString course,QWidget *parent = nullptr);
     ~chatWindow();
+
+    void setRoomInfo(const QString& roomId, const QString& username);
+
+signals:
+    void chatMessageSent(const QString& content);
+    void backToChatSelection();
 
 private slots:
     void on_backButton_clicked();
@@ -22,6 +27,8 @@ private slots:
 
 private:
     Ui::chatWindow *ui;
+    QString m_roomId;
+    QString m_username;
 };
 
 #endif // CHATWINDOW_H
