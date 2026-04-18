@@ -8,16 +8,15 @@ chatWindow::chatWindow(QWidget *parent)
     , ui(new Ui::chatWindow)
 {
     ui->setupUi(this);
-}
-chatWindow::chatWindow(QString course ,QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::chatWindow)
-{
-    ui->setupUi(this);
     this->setStyleSheet("background-color: #1e71a8;");
-    this->setWindowTitle(course+" chat");
-
 }
+
+void chatWindow::setRoomInfo(const QString& roomId, const QString& username) {
+    m_roomId = roomId;
+    m_username = username;
+    this->setWindowTitle(roomId + " chat");
+}
+
 chatWindow::~chatWindow()
 {
     delete ui;
@@ -25,14 +24,11 @@ chatWindow::~chatWindow()
 
 void chatWindow::on_backButton_clicked()
 {
-    parentWidget()->show();
-    this->hide();
+    emit backToChatSelection();
 }
-
 
 void chatWindow::on_zoomButton_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://www.zoom.com"));
-
 }
 

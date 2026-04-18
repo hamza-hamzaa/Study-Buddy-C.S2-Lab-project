@@ -13,23 +13,25 @@ class CourseSelectionWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit CourseSelectionWindow(QString name,QString major, QWidget *parent = nullptr);
+    explicit CourseSelectionWindow(QWidget *parent = nullptr);
     ~CourseSelectionWindow();
+
+    void setUserInfo(const QString& name, const QString& major);
+    QList<QString> getSelectedCourses() const;
+
+signals:
+    void coursesSelected(const QList<QString>& courses);
+    void backToLogin();
 
 private slots:
     void on_BackButton_clicked();
     void on_NextButton_clicked();
 
-
 private:
     Ui::CourseSelectionWindow *ui;
-    std::vector<QString> names;
-    QString selectedMajor;
-    QString name;
+    QString m_name;
+    QString m_major;
     void loadCourses();
-    void limitSelection();
-
-
 };
 
 #endif // COURSESELECTIONWINDOW_H

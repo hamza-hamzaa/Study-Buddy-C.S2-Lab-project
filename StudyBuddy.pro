@@ -1,4 +1,4 @@
-QT += widgets
+QT += core widgets network testlib
 
 CONFIG += c++17
 
@@ -11,13 +11,21 @@ SOURCES += \
     chatwindow.cpp \
     courseselectionwindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qtnetworkclient.cpp \
+    clientcontroller.cpp \
+    testclientcontroller.cpp
 
 HEADERS += \
     chatselectionwindow.h \
     chatwindow.h \
     courseselectionwindow.h \
-    mainwindow.h
+    mainwindow.h \
+    networkclient.h \
+    qtnetworkclient.h \
+    clientcontroller.h \
+    mocknetworkclient.h \
+    testclientcontroller.h
 
 FORMS += \
     chatselectionwindow.ui \
