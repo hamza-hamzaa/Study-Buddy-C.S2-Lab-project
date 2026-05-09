@@ -22,7 +22,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    bool checkID(int ID);
-    bool checkEmail(QString email);
 };
 #endif // MAINWINDOW_H

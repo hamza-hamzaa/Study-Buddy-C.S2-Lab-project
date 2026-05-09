@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include"CourseSelectionWindow.h"
+#include "inputvalidation.h"
 #include "ui_mainwindow.h"
 #include<QMessageBox>
 
@@ -50,27 +51,31 @@ void MainWindow::on_NextButton_clicked()
     msg.setStyleSheet(
         "QMessageBox { background-color: white; }"
         "QLabel { color: #1F2933; font-size: 12px; }"
-        "QPushButton { background-color: #1E71A8; border-radius: 17px;}");
+        "QPushButton { background-color: #1E71A8; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+        "QPushButton:hover { background-color: #2A85C1; }");
     msg1.setStyleSheet(
         "QMessageBox { background-color: white; }"
         "QLabel { color: #1F2933; font-size: 12px; }"
-        "QPushButton { background-color: #1E71A8;  }");
+        "QPushButton { background-color: #1E71A8; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+        "QPushButton:hover { background-color: #2A85C1; }");
     msg2.setStyleSheet(
         "QMessageBox { background-color: white; }"
         "QLabel { color: #1F2933; font-size: 12px; }"
-        "QPushButton { background-color: #1E71A8;  }");
+        "QPushButton { background-color: #1E71A8; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+        "QPushButton:hover { background-color: #2A85C1; }");
     msg3.setStyleSheet(
         "QMessageBox { background-color: white; }"
         "QLabel { color: #1F2933; font-size: 12px; }"
-        "QPushButton { background-color: #1E71A8;  }");
+        "QPushButton { background-color: #1E71A8; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+        "QPushButton:hover { background-color: #2A85C1; }");
 
 
     int ID =ui->IDEdit->text().toInt();
     QString Email=ui->EmailEdit->text();
-    if(ui->nameEdit->text()!=""){
-        if(checkEmail(Email)){
-                if(checkID(ID)){
-                    if(Major!="Major"){
+    if(InputValidation::isValidName(ui->nameEdit->text())){
+        if(InputValidation::isValidEmail(Email)){
+                if(InputValidation::isValidId(ID)){
+                    if(InputValidation::isValidMajor(Major)){
                         this->hide();
                         CourseSelectionWindow * CSW = new CourseSelectionWindow(ui->nameEdit->text(),Major, this);
                         CSW -> show();
@@ -91,20 +96,4 @@ void MainWindow::on_NextButton_clicked()
     else{
         msg3.exec();
     }
-
-
 }
-
-
-
-bool MainWindow::checkID(int ID){
-    if(ID/10000<90026&&ID/10000>90019){
-        return true;
-    }
-    return false;
-}
-bool MainWindow::checkEmail(QString email)
-{
-    return email.endsWith("@aucegypt.edu");
-}
-

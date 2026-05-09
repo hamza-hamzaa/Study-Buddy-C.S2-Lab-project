@@ -1,216 +1,125 @@
-// //#include <QtTest>
-// #include <QTextEdit>
-// #include <QLineEdit>
-// #include <QPushButton>
-// #include <QLabel>
-// #include <QSignalSpy>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QTest>
 
-// #include "chatwindow.h"
-// #include "fakeit.hpp"
+#include "chatwindow.h"
 
-// using namespace fakeit;
+class TestChatWindow : public QObject
+{
+    Q_OBJECT
 
-// // -----------------------------------------------------------------------------
-// // Small mockable interface + helper class just for FakeIt tests
-// // This lets you prove you used mocking without changing the rest of the project.
-// // -----------------------------------------------------------------------------
-// class IMessageSender
-// {
-// public:
-//     virtual ~IMessageSender() = default;
-//     virtual void sendMessage(const QString& message) = 0;
-// };
+private slots:
+    void init();
+    void cleanup();
+    void constructor_setsRoomTitle();
+    void chatMessages_isReadOnly();
+    void sendButton_addsMessage();
+    void sendButton_clearsInput();
+    void emptyMessage_isIgnored();
+    void whitespaceMessage_isIgnored();
+    void multipleMessages_arePrepended();
 
-// class ChatLogic
-// {
-// public:
-//     explicit ChatLogic(IMessageSender* sender)
-//         : m_sender(sender) {}
+private:
+    chatwindow *window = nullptr;
 
-//     bool trySendMessage(const QString& message)
-//     {
-//         QString trimmed = message.trimmed();
+    QTextEdit *chatMessages() const
+    {
+        return window->findChild<QTextEdit *>("ChatMessages");
+    }
 
-//         if (trimmed.isEmpty())
-//             return false;
+    QLineEdit *inputBox() const
+    {
+        return window->findChild<QLineEdit *>("Inputbox");
+    }
 
-//         m_sender->sendMessage(trimmed);
-//         return true;
-//     }
+    QPushButton *sendButton() const
+    {
+        return window->findChild<QPushButton *>("sendButton");
+    }
 
-// private:
-//     IMessageSender* m_sender;
-// };
+    QLabel *chatRoomLabel() const
+    {
+        return window->findChild<QLabel *>("Chatroom");
+    }
+};
 
-// // -----------------------------------------------------------------------------
-// // Test class
-// // -----------------------------------------------------------------------------
-// class TestChatWindow : public QObject
-// {
-//     Q_OBJECT
+void TestChatWindow::init()
+{
+    window = new chatwindow("Student_01", "ROOM1", nullptr);
+    window->show();
 
-// private slots:
-//     void init();
-//     void cleanup();
+    QVERIFY(chatMessages() != nullptr);
+    QVERIFY(inputBox() != nullptr);
+    QVERIFY(sendButton() != nullptr);
+    QVERIFY(chatRoomLabel() != nullptr);
+}
 
-//     // Qt Test UI tests
-//     void test_constructor_sets_room_title();
-//     void test_chat_messages_is_read_only();
-//     void test_send_button_adds_message();
-//     void test_send_button_clears_input();
-//     void test_empty_message_not_added();
-//     void test_whitespace_message_not_added();
-//     void test_return_pressed_sends_message();
-//     void test_multiple_messages_are_appended();
+void TestChatWindow::cleanup()
+{
+    delete window;
+    window = nullptr;
+}
 
-//     // FakeIt mock tests
-//     void test_fakeit_valid_message_calls_sender_once();
-//     void test_fakeit_empty_message_does_not_call_sender();
+void TestChatWindow::constructor_setsRoomTitle()
+{
+    QCOMPARE(chatRoomLabel()->text(), QString("ROOM1"));
+}
 
-// private:
-//     chatWindow* window = nullptr;
+void TestChatWindow::chatMessages_isReadOnly()
+{
+    QVERIFY(chatMessages()->isReadOnly());
+}
 
-//     QTextEdit* chatMessages() const
-//     {
-//         return window->findChild<QTextEdit*>("ChatMessages");
-//     }
+void TestChatWindow::sendButton_addsMessage()
+{
+    inputBox()->setText("Hello everyone");
 
-//     QLineEdit* inputBox() const
-//     {
-//         return window->findChild<QLineEdit*>("Inputbox");
-//     }
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-//     QPushButton* sendButton() const
-//     {
-//         return window->findChild<QPushButton*>("sendMessages");
-//     }
+    QCOMPARE(chatMessages()->toPlainText(), QString("Student_01: Hello everyone"));
+}
 
-//     QLabel* chatRoomLabel() const
-//     {
-//         return window->findChild<QLabel*>("Chatroom");
-//     }
-// };
+void TestChatWindow::sendButton_clearsInput()
+{
+    inputBox()->setText("Testing clear");
 
-// void TestChatWindow::init()
-// {
-//     window = new chatWindow("Thermodynamics focus");
-//     window->show();
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-//     QVERIFY(chatMessages() != nullptr);
-//     QVERIFY(inputBox() != nullptr);
-//     QVERIFY(sendButton() != nullptr);
-//     QVERIFY(chatRoomLabel() != nullptr);
-// }
+    QVERIFY(inputBox()->text().isEmpty());
+}
 
-// void TestChatWindow::cleanup()
-// {
-//     delete window;
-//     window = nullptr;
-// }
+void TestChatWindow::emptyMessage_isIgnored()
+{
+    inputBox()->setText("");
 
-// void TestChatWindow::test_constructor_sets_room_title()
-// {
-//     QCOMPARE(chatRoomLabel()->text(), QString("Thermodynamics focus"));
-// }
+    const QString before = chatMessages()->toPlainText();
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-// void TestChatWindow::test_chat_messages_is_read_only()
-// {
-//     QVERIFY(chatMessages()->isReadOnly());
-// }
+    QCOMPARE(chatMessages()->toPlainText(), before);
+}
 
-// void TestChatWindow::test_send_button_adds_message()
-// {
-//     inputBox()->setText("Hello everyone");
+void TestChatWindow::whitespaceMessage_isIgnored()
+{
+    inputBox()->setText("     ");
 
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
+    const QString before = chatMessages()->toPlainText();
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-//     QString text = chatMessages()->toPlainText();
-//     QVERIFY(text.contains("You: Hello everyone"));
-// }
+    QCOMPARE(chatMessages()->toPlainText(), before);
+}
 
-// void TestChatWindow::test_send_button_clears_input()
-// {
-//     inputBox()->setText("Testing clear");
+void TestChatWindow::multipleMessages_arePrepended()
+{
+    inputBox()->setText("First");
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
+    inputBox()->setText("Second");
+    QTest::mouseClick(sendButton(), Qt::LeftButton);
 
-//     QCOMPARE(inputBox()->text(), QString(""));
-// }
+    QCOMPARE(chatMessages()->toPlainText(), QString("Student_01: Second\nStudent_01: First"));
+}
 
-// void TestChatWindow::test_empty_message_not_added()
-// {
-//     inputBox()->setText("");
-
-//     QString before = chatMessages()->toPlainText();
-
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
-
-//     QString after = chatMessages()->toPlainText();
-//     QCOMPARE(after, before);
-// }
-
-// void TestChatWindow::test_whitespace_message_not_added()
-// {
-//     inputBox()->setText("     ");
-
-//     QString before = chatMessages()->toPlainText();
-
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
-
-//     QString after = chatMessages()->toPlainText();
-//     QCOMPARE(after, before);
-// }
-
-// void TestChatWindow::test_return_pressed_sends_message()
-// {
-//     inputBox()->setText("Sent with enter");
-
-//     QTest::keyClick(inputBox(), Qt::Key_Return);
-
-//     QString text = chatMessages()->toPlainText();
-//     QVERIFY(text.contains("You: Sent with enter"));
-// }
-
-// void TestChatWindow::test_multiple_messages_are_appended()
-// {
-//     inputBox()->setText("First");
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
-
-//     inputBox()->setText("Second");
-//     QTest::mouseClick(sendButton(), Qt::LeftButton);
-
-//     QString text = chatMessages()->toPlainText();
-//     QVERIFY(text.contains("You: First"));
-//     QVERIFY(text.contains("You: Second"));
-// }
-
-// void TestChatWindow::test_fakeit_valid_message_calls_sender_once()
-// {
-//     Mock<IMessageSender> mockSender;
-
-//     When(Method(mockSender, sendMessage)).AlwaysDo([](const QString&) {});
-
-//     ChatLogic logic(&mockSender.get());
-
-//     bool result = logic.trySendMessage("  Hello Qt  ");
-
-//     QVERIFY(result);
-//     Verify(Method(mockSender, sendMessage).Using(QString("Hello Qt"))).Once();
-// }
-
-// void TestChatWindow::test_fakeit_empty_message_does_not_call_sender()
-// {
-//     Mock<IMessageSender> mockSender;
-
-//     When(Method(mockSender, sendMessage)).AlwaysDo([](const QString&) {});
-
-//     ChatLogic logic(&mockSender.get());
-
-//     bool result = logic.trySendMessage("     ");
-
-//     QVERIFY(!result);
-//     Verify(Method(mockSender, sendMessage)).Never();
-// }
-
-// QTEST_MAIN(TestChatWindow)
-// #include "test_chatwindow.moc"
+QTEST_MAIN(TestChatWindow)
+#include "test_chatwindow.moc"

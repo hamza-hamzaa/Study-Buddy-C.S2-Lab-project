@@ -26,6 +26,7 @@ private:
     std::vector<QString> names;
     QString selectedMajor;
     QString name;
+    bool limitWarningPending = false;
     void loadCourses();
     void limitSelection();
 

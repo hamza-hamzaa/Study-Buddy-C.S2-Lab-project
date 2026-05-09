@@ -1,11 +1,13 @@
 
 #include "courseselectionwindow.h"
 #include "chatSelectionWindow.h"
+#include "inputvalidation.h"
 #include "ui_courseselectionwindow.h"
 #include<vector>
 #include<QMessageBox>
 #include<QListWidgetItem>
 #include<QSignalBlocker>
+#include<QTimer>
 
 CourseSelectionWindow::CourseSelectionWindow(QString name,QString major, QWidget *parent): QDialog(parent), ui(new Ui::CourseSelectionWindow)
 {
@@ -29,7 +31,9 @@ CourseSelectionWindow::~CourseSelectionWindow()
 void CourseSelectionWindow::on_BackButton_clicked()
 {
     this->hide();
-    parentWidget()->show();
+    if (parentWidget()) {
+        parentWidget()->show();
+    }
 }
 
 void CourseSelectionWindow::loadCourses()
@@ -272,7 +276,7 @@ void CourseSelectionWindow::limitSelection()
 
     int totalSelected = selectedCourses.size() + selectedCore.size();
 
-    if (totalSelected > 6) {
+    if (!InputValidation::isCourseSelectionWithinLimit(totalSelected)) {
         // Block BOTH widgets to avoid signal recursion
         QSignalBlocker blocker1(ui->CourseListWidget);
         QSignalBlocker blocker2(ui->CoreListWidget);
@@ -287,16 +291,24 @@ void CourseSelectionWindow::limitSelection()
             }
         }
 
-        QMessageBox msg;
-        msg.setIcon(QMessageBox::Warning);
-        msg.setWindowTitle("Limit");
-        msg.setText("You can select a maximum of 6 courses.");
-        msg.setStyleSheet(
-            "QMessageBox { background-color: white; }"
-            "QLabel { color: black; }"
-            "QPushButton { background-color: #0078d7; color: white; }"
-            );
-        msg.exec();
+        if (!limitWarningPending) {
+            limitWarningPending = true;
+            QTimer::singleShot(0, this, [this]() {
+                limitWarningPending = false;
+
+                QMessageBox warningBox(this);
+                warningBox.setIcon(QMessageBox::Warning);
+                warningBox.setWindowTitle("Limit");
+                warningBox.setText("You can select a maximum of 6 courses.");
+                warningBox.setStyleSheet(
+                    "QMessageBox { background-color: white; }"
+                    "QLabel { color: black; }"
+                    "QPushButton { background-color: #0078d7; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+                    "QPushButton:hover { background-color: #2A85C1; }"
+                );
+                warningBox.exec();
+            });
+        }
     }
 
 
@@ -318,5 +330,3 @@ void CourseSelectionWindow::on_NextButton_clicked()
     ChatSelectionWindow * CSW = new ChatSelectionWindow(selectedMajor,name,names,this);
     CSW->show();
 }
-
-

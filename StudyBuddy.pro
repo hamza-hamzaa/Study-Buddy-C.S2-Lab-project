@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets network testlib
 
 CONFIG += c++17
 
@@ -8,15 +8,19 @@ CONFIG += c++17
 
 SOURCES += \
     chatselectionwindow.cpp \
+    inputvalidation.cpp \
     chatwindow.cpp \
     courseselectionwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    chatcontroller.h \
     chatselectionwindow.h \
     chatwindow.h \
     courseselectionwindow.h \
+    ichatclient.h \
+    inputvalidation.h \
     mainwindow.h
 
 FORMS += \
@@ -24,6 +28,11 @@ FORMS += \
     chatwindow.ui \
     courseselectionwindow.ui \
     mainwindow.ui
+
+OTHER_FILES += \
+    fakeit.hpp \
+    test_chatcontroller.cpp \
+    test_chatwindow.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

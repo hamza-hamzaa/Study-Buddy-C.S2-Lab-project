@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(StudyBuddyCS2LabProject LANGUAGES CXX)
 
+enable_testing()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -16,6 +18,8 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    inputvalidation.cpp
+    inputvalidation.h
     chatselectionwindow.cpp
     chatselectionwindow.h
     chatselectionwindow.ui
@@ -55,3 +59,28 @@ target_link_libraries(ChatControllerTests PRIVATE
 )
 
 target_compile_options(ChatControllerTests PRIVATE -O0)
+
+add_test(NAME ChatControllerTests COMMAND ChatControllerTests)
+
+add_executable(ChatWindowTests
+    test_chatwindow.cpp
+    chatwindow.cpp
+    chatwindow.h
+    chatwindow.ui
+)
+
+target_include_directories(ChatWindowTests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(ChatWindowTests PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Network
+    Qt6::Test
+)
+
+target_compile_options(ChatWindowTests PRIVATE -O0)
+
+add_test(NAME ChatWindowTests COMMAND ChatWindowTests)
