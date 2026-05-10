@@ -74,6 +74,8 @@ target_link_libraries(StudyBuddyServer PRIVATE
     ws2_32
     mswsock
 )
+# FIX 3: Forces MinGW to treat the Server as a Console app (fixes WinMain error)
+target_link_options(StudyBuddyServer PRIVATE "-Wl,-subsystem,console")
 
 # ==========================================
 # 3. THE UNIT TESTS (Ali)
