@@ -1,9 +1,9 @@
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
 
-#include <QDialog>
-#include <QTcpSocket>
 #include <QByteArray>
+#include <QDialog>
+#include <QtNetwork/QTcpSocket>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

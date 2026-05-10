@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 3.16)
 # Name of the overall project
 project(StudyBuddyProject LANGUAGES CXX)
 
-# CRITICAL FIX: Upgraded to C++20 so Youssef's Server Coroutines will compile!
+# Kept from the repo: Enables the unit tests
+enable_testing()
+
+# Kept from you: CRITICAL FIX: Upgraded to C++20 so Youssef's Server Coroutines will compile!
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -28,6 +31,8 @@ set(CLIENT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    inputvalidation.cpp
+    inputvalidation.h
     chatselectionwindow.cpp
     chatselectionwindow.h
     chatselectionwindow.ui
@@ -45,10 +50,10 @@ set(CLIENT_SOURCES
 add_executable(StudyBuddyClient ${CLIENT_SOURCES})
 
 # FIX 1: Corrected target name and linked the required Qt6 UI libraries
-target_link_libraries(StudyBuddyClient PRIVATE 
-    Qt6::Core 
-    Qt6::Gui 
-    Qt6::Widgets 
+target_link_libraries(StudyBuddyClient PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
     Qt6::Network
 )
 
@@ -86,3 +91,31 @@ target_link_libraries(ChatControllerTests PRIVATE
     Qt6::Core
     Qt6::Test
 )
+
+# Kept from the repo: Ali's new test configurations
+target_compile_options(ChatControllerTests PRIVATE -O0)
+
+add_test(NAME ChatControllerTests COMMAND ChatControllerTests)
+
+add_executable(ChatWindowTests
+    test_chatwindow.cpp
+    chatwindow.cpp
+    chatwindow.h
+    chatwindow.ui
+)
+
+target_include_directories(ChatWindowTests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(ChatWindowTests PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Network
+    Qt6::Test
+)
+
+target_compile_options(ChatWindowTests PRIVATE -O0)
+
+add_test(NAME ChatWindowTests COMMAND ChatWindowTests)

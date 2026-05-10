@@ -62,19 +62,22 @@ void ChatSelectionWindow::createCourseButtons()
 void ChatSelectionWindow::handleCourseButtonClick()
 {
     QPushButton* btn = qobject_cast<QPushButton*>(sender());
-    QMessageBox msg;
-    msg.setIcon(QMessageBox::Warning);
-    msg.setWindowTitle("Focus Mode");
-    msg.setText("Please choose a focus mode.");
-    msg.setStyleSheet(
-        "QMessageBox { background-color: white; }"
-        "QLabel { color: black; }"
-        "QPushButton { background-color: #0078d7; color: white; }"
-        );
-    if (!btn) return;
+    if (!btn) {
+        return;
+    }
 
     if (!ui->focusRadioButton->isChecked() && !ui->notFocusRadioButton->isChecked()) {
-        msg.exec();
+        QMessageBox warningBox(this);
+        warningBox.setIcon(QMessageBox::Warning);
+        warningBox.setWindowTitle("Focus Mode");
+        warningBox.setText("Please choose a focus mode.");
+        warningBox.setStyleSheet(
+            "QMessageBox { background-color: white; }"
+            "QLabel { color: black; }"
+            "QPushButton { background-color: #0078d7; color: white; border: none; border-radius: 10px; min-width: 72px; padding: 6px 16px; }"
+            "QPushButton:hover { background-color: #2A85C1; }"
+        );
+        warningBox.exec();
         return;
     }
 
@@ -87,13 +90,16 @@ void ChatSelectionWindow::handleCourseButtonClick()
         title = course + " non focus";
     }
 
-    chatwindow* window = new chatwindow(name, title, nullptr, this);
+    chatwindow* window = new chatwindow(name, title, nullptr);
+    window->setAttribute(Qt::WA_DeleteOnClose);
     window->show();
     this->hide();
 }
 
 void ChatSelectionWindow::on_BackButton_clicked()
 {
-    parentWidget()->show();
+    if (parentWidget()) {
+        parentWidget()->show();
+    }
     this->hide();
 }
