@@ -1,17 +1,29 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(StudyBuddyCS2LabProject LANGUAGES CXX)
+# Name of the overall project
+project(StudyBuddyProject LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+# CRITICAL FIX: Upgraded to C++20 so Youssef's Server Coroutines will compile!
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Qt UI Generators
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Test)
+# Find Required Libraries
+# Manually tell CMake where Qt6 is installed
+set(CMAKE_PREFIX_PATH "E:/Applications/Qt/6.11.0/mingw_64")
 
-set(PROJECT_SOURCES
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Test)
+find_package(Boost REQUIRED)
+find_package(Threads REQUIRED)
+
+# ==========================================
+# 1. THE QT CLIENT APPLICATION (Hamza & Ali)
+# ==========================================
+set(CLIENT_SOURCES
     main.cpp
     mainwindow.cpp
     mainwindow.h
@@ -25,33 +37,52 @@ set(PROJECT_SOURCES
     courseselectionwindow.cpp
     courseselectionwindow.h
     courseselectionwindow.ui
+    chatcontroller.cpp
+    chatcontroller.h
+    ichatclient.h
 )
 
-add_executable(StudyBuddyCS2LabProject
-    ${PROJECT_SOURCES}
-)
+add_executable(StudyBuddyClient ${CLIENT_SOURCES})
 
-target_link_libraries(StudyBuddyCS2LabProject PRIVATE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Widgets
+# FIX 1: Corrected target name and linked the required Qt6 UI libraries
+target_link_libraries(StudyBuddyClient PRIVATE 
+    Qt6::Core 
+    Qt6::Gui 
+    Qt6::Widgets 
     Qt6::Network
 )
 
-add_executable(ChatControllerTests
+# ==========================================
+# 2. THE BOOST C++20 SERVER (Youssef & Ahmed)
+# ==========================================
+set(SERVER_SOURCES
+    Server.cpp
+)
+
+add_executable(StudyBuddyServer ${SERVER_SOURCES}
+    json.hpp)
+
+# FIX 2: Added ws2_32 here to fix the _imp_WSAStartup networking errors
+target_link_libraries(StudyBuddyServer PRIVATE
+    Boost::headers
+    Threads::Threads
+    ws2_32
+    mswsock
+)
+
+# ==========================================
+# 3. THE UNIT TESTS (Ali)
+# ==========================================
+set(TEST_SOURCES
     test_chatcontroller.cpp
     chatcontroller.cpp
     chatcontroller.h
     ichatclient.h
 )
 
-target_include_directories(ChatControllerTests PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
+add_executable(ChatControllerTests ${TEST_SOURCES})
+target_include_directories(ChatControllerTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(ChatControllerTests PRIVATE
     Qt6::Core
     Qt6::Test
 )
-
-target_compile_options(ChatControllerTests PRIVATE -O0)
