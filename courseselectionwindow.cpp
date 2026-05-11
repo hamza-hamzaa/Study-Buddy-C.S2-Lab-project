@@ -9,7 +9,11 @@
 #include<QSignalBlocker>
 #include<QTimer>
 
-CourseSelectionWindow::CourseSelectionWindow(QString name,QString major, QWidget *parent): QDialog(parent), ui(new Ui::CourseSelectionWindow)
+CourseSelectionWindow::CourseSelectionWindow(QString name,
+                                             QString major,
+                                             QWidget *previousWindow,
+                                             QWidget *parent)
+    : QDialog(parent), ui(new Ui::CourseSelectionWindow), previousWindow(previousWindow)
 {
     ui->setupUi(this);
     selectedMajor = major;
@@ -30,10 +34,10 @@ CourseSelectionWindow::~CourseSelectionWindow()
 
 void CourseSelectionWindow::on_BackButton_clicked()
 {
-    this->hide();
-    if (parentWidget()) {
-        parentWidget()->show();
+    if (previousWindow) {
+        previousWindow->show();
     }
+    close();
 }
 
 void CourseSelectionWindow::loadCourses()
@@ -263,7 +267,6 @@ void CourseSelectionWindow::loadCourses()
         ui->CourseListWidget->addItem("Fundamentals of Wireless Sensor Networks");
         ui->CourseListWidget->addItem("Selected Topics in Electronics and Communications Engineering");
         ui->CourseListWidget->addItem("Special Problems in Electronics and Communications Engineering");
-
     }
 
 
@@ -326,7 +329,8 @@ void CourseSelectionWindow::limitSelection()
 
 void CourseSelectionWindow::on_NextButton_clicked()
 {
-    this->hide();
-    ChatSelectionWindow * CSW = new ChatSelectionWindow(selectedMajor,name,names,this);
+    ChatSelectionWindow * CSW = new ChatSelectionWindow(selectedMajor, name, names, this);
+    CSW->setAttribute(Qt::WA_DeleteOnClose);
     CSW->show();
+    this->hide();
 }

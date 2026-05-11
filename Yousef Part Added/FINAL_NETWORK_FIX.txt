@@ -1,0 +1,14 @@
+FINAL FIX:
+ChatSelectionWindow now creates a real QTcpSocket
+and passes it into chatwindow.
+
+Messages now:
+Client -> Server
+Server -> Broadcast
+Broadcast -> All Clients
+
+Run:
+1. StudyBuddyServer
+2. Open 2+ StudyBuddy clients
+3. Join same room
+4. Send messages

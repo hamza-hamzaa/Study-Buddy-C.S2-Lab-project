@@ -13,7 +13,10 @@ class CourseSelectionWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit CourseSelectionWindow(QString name,QString major, QWidget *parent = nullptr);
+    explicit CourseSelectionWindow(QString name,
+                                   QString major,
+                                   QWidget *previousWindow = nullptr,
+                                   QWidget *parent = nullptr);
     ~CourseSelectionWindow();
 
 private slots:
@@ -23,6 +26,7 @@ private slots:
 
 private:
     Ui::CourseSelectionWindow *ui;
+    QWidget *previousWindow;
     std::vector<QString> names;
     QString selectedMajor;
     QString name;

@@ -19,6 +19,7 @@ public:
     explicit chatwindow(const QString &username,
                         const QString &roomName,
                         QTcpSocket *socket,
+                        QWidget *previousWindow = nullptr,
                         QWidget *parent = nullptr);
     ~chatwindow();
 
@@ -26,9 +27,12 @@ private slots:
     void on_sendButton_clicked();
     void readFromServer();
 
+    void on_backButton_clicked();
+
 private:
     Ui::chatwindow *ui;
     QTcpSocket *socket;
+    QWidget *previousWindow;
     QString username;
     QString currentRoom;
     QByteArray buffer;

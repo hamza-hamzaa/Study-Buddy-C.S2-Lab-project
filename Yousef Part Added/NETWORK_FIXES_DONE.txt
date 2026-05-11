@@ -1,0 +1,7 @@
+Networking completed:
+- Added RealChatClient using QTcpSocket
+- Client connects to 127.0.0.1:54321
+- Messages now send to server
+- ChatController JSON keys synchronized with server
+- Added live debug output
+- Added newline packet flushing

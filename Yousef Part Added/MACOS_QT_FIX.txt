@@ -1,0 +1,9 @@
+Open CMakeLists.txt project in Qt Creator.
+
+This version fixes:
+- Qt6 package detection
+- Apple Silicon build
+- Windows-only linker flags
+- Incorrect target names
+- Missing RealChatClient inclusion
+- Cross-platform compatibility

@@ -1,0 +1,4 @@
+Live multiplayer chat enabled.
+Run StudyBuddyServer first.
+Then open multiple StudyBuddy clients.
+Messages now broadcast to all connected users.

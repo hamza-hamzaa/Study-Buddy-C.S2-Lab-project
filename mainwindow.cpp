@@ -77,7 +77,8 @@ void MainWindow::on_NextButton_clicked()
                 if(InputValidation::isValidId(ID)){
                     if(InputValidation::isValidMajor(Major)){
                         this->hide();
-                        CourseSelectionWindow * CSW = new CourseSelectionWindow(ui->nameEdit->text(),Major, this);
+                        CourseSelectionWindow * CSW = new CourseSelectionWindow(ui->nameEdit->text(), Major, this);
+                        CSW->setAttribute(Qt::WA_DeleteOnClose);
                         CSW -> show();
                     }
                 else{

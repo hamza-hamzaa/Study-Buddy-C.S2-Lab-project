@@ -5,7 +5,12 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-ChatSelectionWindow::ChatSelectionWindow(QString major,QString name,std::vector<QString> courses, QWidget *parent): QDialog(parent), ui(new Ui::ChatSelectionWindow)
+ChatSelectionWindow::ChatSelectionWindow(QString major,
+                                         QString name,
+                                         std::vector<QString> courses,
+                                         QWidget *previousWindow,
+                                         QWidget *parent)
+    : QDialog(parent), ui(new Ui::ChatSelectionWindow), previousWindow(previousWindow)
 {
     ui->setupUi(this);
     this->name=name;
@@ -90,7 +95,7 @@ void ChatSelectionWindow::handleCourseButtonClick()
         title = course + " non focus";
     }
 
-    chatwindow* window = new chatwindow(name, title, nullptr);
+    chatwindow* window = new chatwindow(name, title, nullptr, this);
     window->setAttribute(Qt::WA_DeleteOnClose);
     window->show();
     this->hide();
@@ -98,8 +103,8 @@ void ChatSelectionWindow::handleCourseButtonClick()
 
 void ChatSelectionWindow::on_BackButton_clicked()
 {
-    if (parentWidget()) {
-        parentWidget()->show();
+    if (previousWindow) {
+        previousWindow->show();
     }
-    this->hide();
+    close();
 }

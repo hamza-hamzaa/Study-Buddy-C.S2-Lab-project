@@ -9,16 +9,18 @@
 chatwindow::chatwindow(const QString &username,
                        const QString &roomName,
                        QTcpSocket *socket,
+                       QWidget *previousWindow,
                        QWidget *parent)
     : QDialog(parent),
     ui(new Ui::chatwindow),
     socket(socket),
+    previousWindow(previousWindow),
     username(username),
     currentRoom(roomName)
 {
     ui->setupUi(this);
 
-    ui->Chatroom->setText(currentRoom);
+    this->setWindowTitle(currentRoom);
     ui->ChatMessages->setReadOnly(true);
 
     if (this->socket && this->socket->state() == QAbstractSocket::ConnectedState)
@@ -127,4 +129,12 @@ void chatwindow::addMessageToTop(const QString &sender, const QString &message)
         ui->ChatMessages->setPlainText(newMessage);
     else
         ui->ChatMessages->setPlainText(newMessage + "\n" + oldMessages);
+}
+
+void chatwindow::on_backButton_clicked()
+{
+    if (previousWindow) {
+        previousWindow->show();
+    }
+    close();
 }
